@@ -35,8 +35,8 @@ pipeline {
       steps {
         withCredentials([usernamePassword(
           credentialsId: DOCKERHUB_CREDENTIALS_ID,
-          passwordVariable: 'DOCKERHUB_PASSWORD',
-          usernameVariable: 'DOCKERHUB_USERNAME'
+          passwordVariable: '9092897730',
+          usernameVariable: 'vipv'
         )]) {
           sh 'docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}'
           sh 'docker push ${DOCKERHUB_REGISTRY}:${BUILD_NUMBER}'
