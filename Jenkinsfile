@@ -1,53 +1,107 @@
+// pipeline {
+//   agent any
+
+//   tools {
+//     nodejs 'node'
+//   }
+
+//   environment {
+//     DOCKERHUB_REGISTRY = 'joanroucoux/node-web-app'
+//     DOCKERHUB_CREDENTIALS_ID = 'dockerhub'
+//   }
+
+//   stages {
+//     stage('Install dependencies') {
+//       steps {
+//         sh 'npm install'
+//       }
+//     }
+
+//     stage('Test') {
+//       steps {
+//         sh 'npm test'
+//       }
+//     }
+
+//     stage('Build Docker image') {
+//       steps {
+//         script {
+//           sh 'docker build -t ${DOCKERHUB_REGISTRY}:${BUILD_NUMBER} .'
+//         }
+//       }
+//     }
+
+//     stage('Push Docker image') {
+//       steps {
+//         withCredentials([usernamePassword(
+//           credentialsId: DOCKERHUB_CREDENTIALS_ID,
+//           passwordVariable: '9092897730',
+//           usernameVariable: 'vipv'
+//         )]) {
+//           sh 'docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}'
+//           sh 'docker push ${DOCKERHUB_REGISTRY}:${BUILD_NUMBER}'
+//         }
+//       }
+//     }
+//   }
+
+//   post {
+//     always {
+//       sh 'docker logout'
+//     }
+//   }
+// }
 pipeline {
-  agent any
+    agent any
 
-  tools {
-    nodejs 'node'
-  }
-
-  environment {
-    DOCKERHUB_REGISTRY = 'joanroucoux/node-web-app'
-    DOCKERHUB_CREDENTIALS_ID = 'dockerhub'
-  }
-
-  stages {
-    stage('Install dependencies') {
-      steps {
-        sh 'npm install'
-      }
+    tools {
+        nodejs 'node' // Use the name you configured in Jenkins for Node.js
     }
 
-    stage('Test') {
-      steps {
-        sh 'npm test'
-      }
+    environment {
+        DOCKERHUB_REGISTRY = 'joanroucoux/node-web-app'
+        DOCKERHUB_CREDENTIALS_ID = 'dockerhub'
     }
 
-    stage('Build Docker image') {
-      steps {
-        script {
-          sh 'docker build -t ${DOCKERHUB_REGISTRY}:${BUILD_NUMBER} .'
+    stages {
+        stage('Install dependencies') {
+            steps {
+                sh 'npm install'
+            }
         }
-      }
-    }
 
-    stage('Push Docker image') {
-      steps {
-        withCredentials([usernamePassword(
-          credentialsId: DOCKERHUB_CREDENTIALS_ID,
-          passwordVariable: '9092897730',
-          usernameVariable: 'vipv'
-        )]) {
-          sh 'docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}'
-          sh 'docker push ${DOCKERHUB_REGISTRY}:${BUILD_NUMBER}'
+        stage('Test') {
+            steps {
+                sh 'npm test'
+            }
         }
-      }
-    }
-  }
 
-  post {
-    always {
-      sh 'docker logout'
+        stage('Build Docker image') {
+            steps {
+                script {
+                    sh 'docker build -t ${DOCKERHUB_REGISTRY}:${BUILD_NUMBER} .'
+                }
+            }
+        }
+
+        stage('Push Docker image') {
+            steps {
+                withCredentials([usernamePassword(
+                    credentialsId: DOCKERHUB_CREDENTIALS_ID,
+                    passwordVariable: '9092897730',
+                    usernameVariable: 'vipv'
+                )]) {
+                    sh 'docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}'
+                    sh 'docker push ${DOCKERHUB_REGISTRY}:${BUILD_NUMBER}'
+                }
+            }
+        }
     }
-  }
+
+    post {
+        always {
+            sh 'docker logout'
+        }
+    }
 }
+
