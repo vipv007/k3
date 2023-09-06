@@ -6,8 +6,8 @@
 //   }
 
 //   environment {
-//     DOCKERHUB_REGISTRY = 'joanroucoux/node-web-app'
-//     DOCKERHUB_CREDENTIALS_ID = 'dockerhub'
+//     DOCKERHUB_REGISTRY = 'https://hub.docker.com/r/vipv/devopshint'
+//     DOCKERHUB_CREDENTIALS_ID = 'doc1'
 //   }
 
 //   stages {
@@ -34,7 +34,7 @@
 //     stage('Push Docker image') {
 //       steps {
 //         withCredentials([usernamePassword(
-//           credentialsId: DOCKERHUB_CREDENTIALS_ID,
+//           credentialsId: doc1,
 //           passwordVariable: '9092897730',
 //           usernameVariable: 'vipv'
 //         )]) {
@@ -59,8 +59,8 @@ pipeline {
     }
 
     environment {
-        DOCKERHUB_REGISTRY = 'joanroucoux/node-web-app'
-        DOCKERHUB_CREDENTIALS_ID = 'dockerhub'
+        DOCKERHUB_REGISTRY = 'https://hub.docker.com/r/vipv/devopshint'
+        DOCKERHUB_CREDENTIALS_ID = 'doc1'
     }
 
     stages {
@@ -87,7 +87,7 @@ pipeline {
         stage('Push Docker image') {
             steps {
                 withCredentials([usernamePassword(
-                    credentialsId: DOCKERHUB_CREDENTIALS_ID,
+                    credentialsId: doc1,
                     passwordVariable: '9092897730',
                     usernameVariable: 'vipv'
                 )]) {
