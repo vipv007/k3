@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment {
-        DOCKERHUB_REGISTRY = 'kuber_test'
+        DOCKERHUB_REGISTRY = 'nginx'
         DOCKERHUB_CREDENTIALS_ID = 'doc1'
     }
 
