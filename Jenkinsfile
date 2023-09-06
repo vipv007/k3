@@ -79,7 +79,8 @@ pipeline {
         stage('Build Docker image') {
             steps {
                 script {
-                    bat 'docker build -t ${DOCKERHUB_REGISTRY}:${BUILD_NUMBER} .'
+                    def buildCommand = "docker build -t ${DOCKERHUB_REGISTRY}:${BUILD_NUMBER} ."
+                    bat buildCommand
                 }
             }
         }
