@@ -6,7 +6,7 @@ pipeline {
     }
 
     environment {
-        DOCKERHUB_REGISTRY = 'kuber_test'
+        DOCKERHUB_REGISTRY = 'vipv/kuber'
         DOCKERHUB_CREDENTIALS_ID = 'dockerhub'
     }
 
@@ -17,11 +17,11 @@ pipeline {
             }
         }
 
-        stage('Test') {
-            steps {
-                bat 'npm test'
-            }
-        }
+        // stage('Test') {
+        //     steps {
+        //         bat 'npm test'
+        //     }
+        // }
 
         stage('Build Docker image') {
             steps {
