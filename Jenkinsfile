@@ -47,6 +47,22 @@ pipeline {
       }
     }
     }
+    stage('Kubernetes Configuration') {
+            steps {
+                script {
+                    def kubeContext = 'docker-desktop'
+                    def clusterDetails = '{"cluster":{"certificate-authority-data":"DATA+OMITTED","server":"https://kubernetes.docker.internal:6443"},"name":"docker-desktop"}'
+                    def userDetails = '{"name":"docker-desktop","user":{"client-certificate-data":"DATA+OMITTED","client-key-data":"DATA+OMITTED"}}'
+                    def kubeNamespace = 'kuber'
+
+                    // Display information in the console output
+                    echo "Current Kubernetes Context: ${kubeContext}"
+                    echo "Cluster Details: ${clusterDetails}"
+                    echo "User Details: ${userDetails}"
+                    echo "Current Namespace: ${kubeNamespace}"
+                }
+            }
+        }
     post {
         always {
             bat 'docker logout'
