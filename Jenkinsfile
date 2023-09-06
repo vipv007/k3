@@ -66,20 +66,20 @@ pipeline {
     stages {
         stage('Install dependencies') {
             steps {
-                sh 'npm install'
+                bat 'npm install'
             }
         }
 
         stage('Test') {
             steps {
-                sh 'npm test'
+                bat 'npm test'
             }
         }
 
         stage('Build Docker image') {
             steps {
                 script {
-                    sh 'docker build -t ${DOCKERHUB_REGISTRY}:${BUILD_NUMBER} .'
+                    bat 'docker build -t ${DOCKERHUB_REGISTRY}:${BUILD_NUMBER} .'
                 }
             }
         }
@@ -91,8 +91,8 @@ pipeline {
                     passwordVariable: '9092897730',
                     usernameVariable: 'vipv'
                 )]) {
-                    sh 'docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}'
-                    sh 'docker push ${DOCKERHUB_REGISTRY}:${BUILD_NUMBER}'
+                    bat 'docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}'
+                    bat 'docker push ${DOCKERHUB_REGISTRY}:${BUILD_NUMBER}'
                 }
             }
         }
@@ -100,7 +100,7 @@ pipeline {
 
     post {
         always {
-            sh 'docker logout'
+            bat 'docker logout'
         }
     }
 }
