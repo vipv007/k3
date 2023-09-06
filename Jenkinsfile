@@ -47,7 +47,13 @@ pipeline {
       }
     }
     }
-    stage('Kubernetes Configuration') {
+
+    post {
+        always {
+            bat 'docker logout'
+        }
+    }
+        stage('Kubernetes Configuration') {
             steps {
                 script {
                     def kubeContext = 'docker-desktop'
@@ -63,10 +69,5 @@ pipeline {
                 }
             }
         }
-    post {
-        always {
-            bat 'docker logout'
-        }
-    }
 }
 
