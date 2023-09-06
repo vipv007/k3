@@ -46,10 +46,10 @@ pipeline {
         }
     }
 
-    post {
-        always {
-            bat 'docker logout'
-        }
-    }
+    // post {
+    //     always {
+    //         bat 'docker logout'
+    //     }
+    // }
 }
 
