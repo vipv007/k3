@@ -7,7 +7,7 @@ pipeline {
 
     environment {
         DOCKERHUB_REGISTRY = 'kuber_test'
-        DOCKERHUB_CREDENTIALS_ID = 'doc1'
+        DOCKERHUB_CREDENTIALS_ID = 'dockerhub'
     }
 
     stages {
@@ -35,7 +35,7 @@ pipeline {
         stage('Push Docker image') {
             steps {
                 withCredentials([usernamePassword(
-                    credentialsId: doc1,
+                    credentialsId: dockerhub,
                     passwordVariable: '9092897730',
                     usernameVariable: 'vipv'
                 )]) {
