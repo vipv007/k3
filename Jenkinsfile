@@ -62,6 +62,24 @@ pipeline {
                 }
             }
         }
+
+        stage('Deploy to Kubernetes') {
+    steps {
+        script {
+            def kubeConfig = readFile('D:\\kubeconfig.yaml') // Replace with the actual path to your kubeconfig file
+            def fileName = 'D\\deployment.yaml' // Replace with the actual path to your deployment YAML file
+
+            // Apply the Kubernetes configuration
+            sh """
+                echo \${kubeConfig} > kubeconfig.yaml
+                kubectl --kubeconfig=kubeconfig.yaml apply -f ${fileName}
+                rm kubeconfig.yaml
+            """
+        }
+    }
+}
+
+        
     }
 
     post {
