@@ -33,17 +33,18 @@ pipeline {
         }
 
         stage('Push Docker image') {
-            steps {
-                withCredentials([usernamePassword(
-                    credentialsId: dockerhub,
-                    passwordVariable: '9092897730',
-                    usernameVariable: 'vipv'
-                )]) {
-                    bat 'docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}'
-                    bat 'docker push ${DOCKERHUB_REGISTRY}:${BUILD_NUMBER}'
-                }
-            }
+      steps {
+        withEnv(['DOCKERHUB_USERNAME=vipv', 'DOCKERHUB_PASSWORD=9092897730*']) {
+          withCredentials([usernamePassword(
+            credentialsId: DOCKERHUB_CREDENTIALS_ID,
+            passwordVariable: 'DOCKERHUB_PASSWORD',
+            usernameVariable: 'DOCKERHUB_USERNAME'
+          )]) {
+            bat "docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}"
+            bat "docker push ${DOCKERHUB_REGISTRY}:${BUILD_NUMBER}"
+          }
         }
+      }
     }
 
     // post {
