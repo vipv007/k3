@@ -16,6 +16,6 @@ spec:
     spec:
       containers:
         - name: node-web-app
-          image: joanroucoux/node-web-app
+          image: vipv/kuber
           ports:
-            - containerPort: 8080
+            - containerPort: 2500
