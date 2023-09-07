@@ -62,7 +62,7 @@ pipeline {
                 }
             }
         }
-
+stage('Deploy to Kubernetes') {
 steps {
         script {
             def kubeConfig = readFile('C:\\Users\\vipve\\.kube\\config.yaml') // Replace with the actual path to your kubeconfig file
