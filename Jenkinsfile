@@ -77,15 +77,15 @@ pipeline {
 //         }
 //     }
 // }
-stage('Deploy to Kubernetes') {
-            steps {
-                script {
-                    // Apply your Kubernetes Deployment and Service YAML files
-                    bat 'kubectl apply -f node-web-app-deployment.yaml'
-                    bat 'kubectl apply -f node-web-app-service.yaml'
-                }
-            }
-        }
+// stage('Deploy to Kubernetes') {
+//             steps {
+//                 script {
+//                     // Apply your Kubernetes Deployment and Service YAML files
+//                     bat 'kubectl apply -f node-web-app-deployment.yaml'
+//                     bat 'kubectl apply -f node-web-app-service.yaml'
+//                 }
+//             }
+//         }
 
 //         stage('Deploy to Kubernetes') {
 //     steps {
@@ -101,6 +101,35 @@ stage('Deploy to Kubernetes') {
 //         }
 //     }
 // }
+stage('Kubernetes Configuration') {
+    steps {
+        script {
+            def kubeContext = 'docker-desktop'
+            def clusterDetails = '{"cluster":{"certificate-authority-data":"DATA+OMITTED","server":"https://kubernetes.docker.internal:6443"},"name":"docker-desktop"}'
+            def userDetails = '{"name":"docker-desktop","user":{"client-certificate-data":"DATA+OMITTED","client-key-data":"DATA+OMITTED"}}'
+            def kubeNamespace = 'kuber'
+
+            // Display information in the console output
+            echo "Current Kubernetes Context: ${kubeContext}"
+            echo "Cluster Details: ${clusterDetails}"
+            echo "User Details: ${userDetails}"
+            echo "Current Namespace: ${kubeNamespace}"
+
+            // Apply your Kubernetes Deployment and Service YAML files
+            def deploymentFile = 'node-web-app-deployment.yaml' // Update with the correct path
+            def serviceFile = 'node-web-app-service.yaml' // Update with the correct path
+
+            bat "kubectl apply -f ${deploymentFile} -n ${kubeNamespace}"
+            bat "kubectl apply -f ${serviceFile} -n ${kubeNamespace}"
+
+            // Wait for the deployment to finish
+            bat "kubectl rollout status deployment/your-deployment-name -n ${kubeNamespace}"
+
+            // Optionally, you can check the pods to see if they are running
+            bat "kubectl get pods -n ${kubeNamespace}"
+        }
+    }
+}
 
         
     }
