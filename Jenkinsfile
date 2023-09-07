@@ -95,7 +95,7 @@ pipeline {
             def namespace = 'kuber' // Replace with the target Kubernetes namespace
 
             // Apply the deployment using kubectl
-            sh """
+            bat """
                 kubectl apply --kubeconfig=${kubeconfigPath} -n ${namespace} -f ${deploymentFile}
             """
         }
