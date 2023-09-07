@@ -1,7 +1,7 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: docker-desktop
+  name: node-web-app-deployment
   labels:
     app: node-web-app
 spec:
@@ -15,7 +15,7 @@ spec:
         app: node-web-app
     spec:
       containers:
-        - name: docker-desktop
+        - name: node-web-app
           image: vipv/kuber
           ports:
             - containerPort: 3000
