@@ -36,9 +36,9 @@ pipeline {
       steps {
         withEnv(['DOCKERHUB_USERNAME=vipv', 'DOCKERHUB_PASSWORD=9092897730']) {
           withCredentials([usernamePassword(
-            credentialsId: dockerhub,
-            passwordVariable: '9092897730',
-            usernameVariable: 'vipv/kuber'
+            credentialsId: DOCKERHUB_CREDENTIALS_ID,
+                        passwordVariable: 'DOCKERHUB_PASSWORD',
+                        usernameVariable: 'DOCKERHUB_USERNAME'
           )]) {
             bat "docker login -u ${DOCKERHUB_USERNAME} -p ${DOCKERHUB_PASSWORD}"
             bat "docker push ${DOCKERHUB_REGISTRY}:${BUILD_NUMBER}"
@@ -77,30 +77,30 @@ pipeline {
 //         }
 //     }
 // }
-// stage('Deploy to Kubernetes') {
-//             steps {
-//                 script {
-//                     // Apply your Kubernetes Deployment and Service YAML files
-//                     bat 'kubectl apply -f node-web-app-deployment.yaml'
-//                     bat 'kubectl apply -f node-web-app-service.yaml'
-//                 }
-//             }
-//         }
-
-        stage('Deploy to Kubernetes') {
-    steps {
-        script {
-            def kubeconfigPath = 'C:\\Users\\vipve\\.kube\\config.yaml' // Replace with the actual path to your kubeconfig file
-            def deploymentFile = 'C:\\Users\\vipve\\k3\\node-web-app-deployment.yaml' // Replace with the actual path to your deployment YAML file
-            def namespace = 'kuber' // Replace with the target Kubernetes namespace
-
-            // Apply the deployment using kubectl
-            bat """
-                kubectl apply --kubeconfig=${kubeconfigPath} -n ${namespace} -f ${deploymentFile}
-            """
+stage('Deploy to Kubernetes') {
+            steps {
+                script {
+                    // Apply your Kubernetes Deployment and Service YAML files
+                    bat 'kubectl apply -f node-web-app-deployment.yaml'
+                    bat 'kubectl apply -f node-web-app-service.yaml'
+                }
+            }
         }
-    }
-}
+
+//         stage('Deploy to Kubernetes') {
+//     steps {
+//         script {
+//             def kubeconfigPath = 'C:\\Users\\vipve\\.kube\\config.yaml' // Replace with the actual path to your kubeconfig file
+//             def deploymentFile = 'C:\\Users\\vipve\\k3\\node-web-app-deployment.yaml' // Replace with the actual path to your deployment YAML file
+//             def namespace = 'kuber' // Replace with the target Kubernetes namespace
+
+//             // Apply the deployment using kubectl
+//             bat """
+//                 kubectl apply --kubeconfig=${kubeconfigPath} -n ${namespace} -f ${deploymentFile}
+//             """
+//         }
+//     }
+// }
 
 
         
