@@ -34,7 +34,7 @@ pipeline {
 
         stage('Push Docker image') {
       steps {
-        withEnv(['DOCKERHUB_USERNAME=vipv', 'DOCKERHUB_PASSWORD=9092897730*']) {
+        withEnv(['DOCKERHUB_USERNAME=vipv', 'DOCKERHUB_PASSWORD=9092897730']) {
           withCredentials([usernamePassword(
             credentialsId: dockerhub,
             passwordVariable: '9092897730',
