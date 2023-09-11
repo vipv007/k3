@@ -1,19 +1,13 @@
 const express = require('express');
-
 const app = express();
 const port = 3000;
 
-const todos = ['This is a task', 'This is another task', 'Again another task'];
+app.get('/', (_req, res) => {
+  res.send('Hello, World!');
+});
 
-app.get('/todos', (_req, res) =>
-  res.status(200).json({
-    data: todos,
-    error: null,
-  })
-);
-
-const server = app.listen(port, () =>
-  console.log(`Example app listening at http://localhost:${port}`)
-);
+const server = app.listen(port, () => {
+  console.log(`Server is listening on port ${port}`);
+});
 
 module.exports = server;
