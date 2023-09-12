@@ -17,5 +17,6 @@ spec:
       containers:
         - name: node-web-app
           image: vipv/kuber
+          imagePullPolicy: IfNotPresent
           ports:
             - containerPort: 3000
